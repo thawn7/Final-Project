@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class PlayUIManager : MonoBehaviour
+public class SystemManager : MonoBehaviour
 {
     [Header("UI (Legacy)")]
     public Dropdown timerDropdown;      // existing
