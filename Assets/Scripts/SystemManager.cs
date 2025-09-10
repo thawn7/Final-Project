@@ -14,13 +14,10 @@ public class SystemManager : MonoBehaviour
 
     private readonly int[] minuteMap = { 1, 3, 5, 10 };
     private readonly int[] questionMap = { 5, 10, 15, 20, 30 }; // match your dropdown options
-
+    public GameObject xExit;
     void Awake()
     {
-        if (playButton == null) Debug.LogError("PlayUIManager: playButton not assigned.");
-        if (timerDropdown == null) Debug.LogError("PlayUIManager: timerDropdown not assigned.");
-        if (questionsDropdown == null) Debug.LogError("PlayUIManager: questionsDropdown not assigned."); // NEW
-        if (problemButtons == null || problemButtons.Length == 0) Debug.LogError("PlayUIManager: problemButtons not assigned.");
+
     }
 
     void Start()
@@ -65,13 +62,18 @@ public class SystemManager : MonoBehaviour
         int idx = Mathf.Clamp(questionsDropdown.value, 0, questionMap.Length - 1);
         return questionMap[idx];
     }
+    public void Exit()
+    {
+        //UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
+    }
 
     // Hook this to Play button OnClick()
     public void StartGame()
     {
         if (string.IsNullOrEmpty(selectedProblem))
         {
-            Debug.LogError("PlayUIManager: No problem selected.");
+            Debug.LogError("No problem selected.");
             return;
         }
 

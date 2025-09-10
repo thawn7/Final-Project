@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public Button submitButton;
     public Text timerText;
     public Text progressText; // e.g., "Q 1/5"
+    public Button backButton;
 
     [Header("Settings")]
     public int totalQuestions = 5;
@@ -59,6 +60,11 @@ public class GameManager : MonoBehaviour
         {
             EndGame(passed: false);
         }
+    }
+    public void OnBackClicked()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Intro");
     }
 
     void OnEndEditReturn(string _)

@@ -993,6 +993,8 @@ MonoBehaviour:
   retryButton: {fileID: 2121591400}
   homeButton: {fileID: 286348653}
   exitButton: {fileID: 1884141590}
+  endClip: {fileID: 8300000, guid: 5a0a8c33c3201534aa7bbdde98f3c090, type: 3}
+  endVolume: 1
 --- !u!4 &1544373738
 Transform:
   m_ObjectHideFlags: 0
