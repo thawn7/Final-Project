@@ -54,7 +54,7 @@ public class EndScript : MonoBehaviour
 
     void OnExit()
     {
-        UnityEditor.EditorApplication.isPlaying = false;
+        //UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
 
