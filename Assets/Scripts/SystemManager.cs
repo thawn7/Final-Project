@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class SystemManager : MonoBehaviour
 {
@@ -64,8 +65,12 @@ public class SystemManager : MonoBehaviour
     }
     public void Exit()
     {
-        //UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
+
+        #if UNITY_EDITOR
+
+            UnityEditor.EditorApplication.isPlaying = false;
+        #endif
     }
 
     // Hook this to Play button OnClick()

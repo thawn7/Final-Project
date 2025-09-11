@@ -195,7 +195,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.71728164, y: 0.7146778}
   m_AnchorMax: {x: 0.86787367, y: 0.88400006}
-  m_AnchoredPosition: {x: -0.8999939, y: 0.7799988}
+  m_AnchoredPosition: {x: -0.8999634, y: 0.7799988}
   m_SizeDelta: {x: -6.560486, y: -9.776093}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &218981646
@@ -885,7 +885,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -13}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1314191855
@@ -915,13 +915,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: Answer
 --- !u!222 &1314191856
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -968,6 +968,8 @@ MonoBehaviour:
   progressText: {fileID: 60445345}
   backButton: {fileID: 1498770694}
   totalQuestions: 5
+  correctClip: {fileID: 8300000, guid: 59c37a0610d5a414ea480344fe76b4d8, type: 3}
+  correctVolume: 1
 --- !u!4 &1412407472
 Transform:
   m_ObjectHideFlags: 0
@@ -1276,6 +1278,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1412407473}
+        m_TargetAssemblyTypeName: Audio, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1498770695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1368,7 +1382,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.7008448, y: 0.8506445}
   m_AnchorMax: {x: 0.88400006, y: 0.9723389}
-  m_AnchoredPosition: {x: 0.1000061, y: 0.5}
+  m_AnchoredPosition: {x: 0.10003662, y: 0.5}
   m_SizeDelta: {x: -7.095886, y: -4.9873962}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1747774552

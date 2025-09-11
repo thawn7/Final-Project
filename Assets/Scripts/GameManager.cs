@@ -10,10 +10,16 @@ public class GameManager : MonoBehaviour
     public Button submitButton;
     public Text timerText;
     public Text progressText; // e.g., "Q 1/5"
-    public Button backButton;
+    public Button backButton; // if you already added this
 
     [Header("Settings")]
     public int totalQuestions = 5;
+
+    [Header("SFX")]                           // <-- NEW
+    public AudioClip correctClip;             // <-- NEW (assign in Inspector)
+    [Range(0f, 1f)] public float correctVolume = 1f; // <-- NEW
+
+    private AudioSource sfx;                  // <-- NEW
 
     private int currentQuestionIndex = 0; // also equals solved count
     private int currentAnswer = 0;
@@ -23,19 +29,30 @@ public class GameManager : MonoBehaviour
     private string mode;
     private bool gameOver = false;
 
+    void Awake()                               // <-- NEW
+    {
+        // Create/get AudioSource without RequireComponent (prevents console log)
+        sfx = GetComponent<AudioSource>();
+        if (sfx == null) sfx = gameObject.AddComponent<AudioSource>();
+        sfx.playOnAwake = false;
+        sfx.spatialBlend = 0f; // 2D
+    }
+
     void Start()
     {
         // Load selection from Intro
         mode = GameConfig.SelectedProblem;
         timeLimitSeconds = Mathf.Max(1, GameConfig.SelectedMinutes) * 60;
 
-        // ⬇️ Use the Intro dropdown value here
+        // Use the Intro dropdown value here
         totalQuestions = Mathf.Max(1, GameConfig.SelectedTotalQuestions);
         GameConfig.TotalQuestions = totalQuestions; // keep End scene in sync
 
         // Wire UI
         submitButton.onClick.AddListener(SubmitAnswer);
         answerInput.onEndEdit.AddListener(OnEndEditReturn);
+
+        if (backButton != null) backButton.onClick.AddListener(onBackClicked); // if you use Back
 
         // Init
         currentQuestionIndex = 0;
@@ -61,11 +78,6 @@ public class GameManager : MonoBehaviour
             EndGame(passed: false);
         }
     }
-    public void OnBackClicked()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Intro");
-    }
 
     void OnEndEditReturn(string _)
     {
@@ -81,6 +93,8 @@ public class GameManager : MonoBehaviour
         {
             if (user == currentAnswer)
             {
+                PlayCorrectSfx(); // <-- NEW: play success sound
+
                 currentQuestionIndex++; // one more solved
 
                 if (currentQuestionIndex >= totalQuestions)
@@ -104,6 +118,12 @@ public class GameManager : MonoBehaviour
         answerInput.text = "";
         answerInput.ActivateInputField();
         answerInput.caretPosition = 0;
+    }
+
+    // <-- NEW
+    void PlayCorrectSfx()
+    {
+        if (correctClip != null) sfx.PlayOneShot(correctClip, correctVolume);
     }
 
     void NextQuestion()
@@ -169,5 +189,11 @@ public class GameManager : MonoBehaviour
         GameConfig.ElapsedSeconds = elapsedSeconds;
 
         SceneManager.LoadScene("End");
+    }
+
+    public void onBackClicked() // if you use a Back button
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Intro");
     }
 }
