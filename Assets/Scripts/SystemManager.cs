@@ -6,16 +6,17 @@ using UnityEditor;
 public class SystemManager : MonoBehaviour
 {
     [Header("UI (Legacy)")]
-    public Dropdown timerDropdown;      // existing
-    public Dropdown questionsDropdown;  // NEW
-    public Button playButton;           // existing
-    public Button[] problemButtons;     // existing
+    public Dropdown timerDropdown;      // 
+    public Dropdown questionsDropdown;  // 
+    public Button playButton;           // 
+    public Button[] problemButtons;     // 
 
     private string selectedProblem = "";
 
     private readonly int[] minuteMap = { 1, 3, 5, 10 };
-    private readonly int[] questionMap = { 5, 10, 15, 20, 30 }; // match your dropdown options
+    private readonly int[] questionMap = { 5, 10, 15, 20, 30 };
     public GameObject xExit;
+    public Text DisplayText;
     void Awake()
     {
 
@@ -73,7 +74,26 @@ public class SystemManager : MonoBehaviour
         #endif
     }
 
-    // Hook this to Play button OnClick()
+    public void addmsg()
+    {
+        DisplayText.text = "Addition";
+    }
+
+    public void subtractmsg()
+    {
+        DisplayText.text = "Subtraction";
+    }
+
+    public void multiplymsg()
+    {
+        DisplayText.text = "Multiplication";
+    }
+
+    public void dividemsg()
+    {
+        DisplayText.text = "Division";
+    }
+
     public void StartGame()
     {
         if (string.IsNullOrEmpty(selectedProblem))

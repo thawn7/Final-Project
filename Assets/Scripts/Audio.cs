@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class Audio : MonoBehaviour
 {
-    public AudioClip clickClip;   // assign your single pop sound here
+    public AudioClip clickClip;
     [Range(0f, 1f)] public float volume = 1f;
 
     AudioSource src;

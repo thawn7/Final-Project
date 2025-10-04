@@ -1,22 +1,25 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
+using System.Collections.Generic;
+using System.Globalization; // for formatting consistency
 
 public class EndScript : MonoBehaviour
 {
     [Header("UI (current run)")]
-    public Text problemText;        // e.g., "Subtraction"
-    public Text finishTimeText;     // this run's time (time string only)
-    public Text bestTimeText;       // best time for the selected mode (time string only)
+    public Text problemText;
+    public Text finishTimeText;
+    public Text bestTimeText;
 
     [Header("Result Message (one text)")]
-    public Text resultText;         // <-- NEW: single pass/fail message text
+    public Text resultText;
 
     [Header("UI (all best times by mode) - times only")]
-    public Text bestAddTimeText;       // time only
-    public Text bestSubtractTimeText;  // time only
-    public Text bestMultiplyTimeText;  // time only
-    public Text bestDivideTimeText;    // time only
+    public Text bestAddTimeText;
+    public Text bestSubtractTimeText;
+    public Text bestMultiplyTimeText;
+    public Text bestDivideTimeText;
 
     [Header("Buttons")]
     public Button retryButton;
@@ -24,26 +27,30 @@ public class EndScript : MonoBehaviour
     public Button exitButton;
 
     [Header("End Scene SFX")]
-    public AudioClip endClip;                 // single sound to play on load
+    public AudioClip endClip;
     [Range(0f, 1f)] public float endVolume = 1f;
 
     private AudioSource sfx;
-    public void Exit()
+    private string savePath;
+
+    [System.Serializable]
+    public class HighScoreEntry
     {
-        Application.Quit();
-
-    #if UNITY_EDITOR
-
-        UnityEditor.EditorApplication.isPlaying = false;
-    #endif
+        public string mode;
+        public float bestTime;
     }
+
+    private List<HighScoreEntry> highScores = new List<HighScoreEntry>();
+
     void Awake()
     {
-        // silent auto-create AudioSource
         sfx = GetComponent<AudioSource>();
         if (sfx == null) sfx = gameObject.AddComponent<AudioSource>();
         sfx.playOnAwake = false;
-        sfx.spatialBlend = 0f; // 2D
+        sfx.spatialBlend = 0f;
+
+        savePath = Path.Combine(Application.dataPath, "gamesavefile.json");
+        LoadHighScores();
     }
 
     void Start()
@@ -52,67 +59,128 @@ public class EndScript : MonoBehaviour
 
         if (retryButton) retryButton.onClick.AddListener(() => SceneManager.LoadScene("Game"));
         if (homeButton) homeButton.onClick.AddListener(() => SceneManager.LoadScene("Intro"));
-        //if (exitButton) exitButton.onClick.AddListener(Application.Quit);
+        if (exitButton) exitButton.onClick.AddListener(Exit);
 
-        // Pull current session data
-        string mode = GameConfig.SelectedProblem;            // "Add","Subtract","Multiply","Divide"
-        int minutes = Mathf.Max(1, GameConfig.SelectedMinutes);
+        string mode = GameConfig.SelectedProblem;
         int totalQs = Mathf.Max(1, GameConfig.TotalQuestions);
         int solved = GameConfig.ProblemsSolved;
         float secs = GameConfig.ElapsedSeconds;
         bool passed = GameConfig.Passed;
 
-        // One display text for pass/fail + summary  --------------------------
-        string msg = passed
-            ? $"YOU WON!!"
-            : $"Time's Up! You Lost!";
-        if (resultText) resultText.text = msg;
-        // --------------------------------------------------------------------
-
-        // Display chosen problem + this run's time (just the values)
         if (problemText) problemText.text = PrettyMode(mode);
         if (finishTimeText) finishTimeText.text = FormatTime(secs);
 
-        // Update best time for the selected mode only when all solved
+        string msg = passed ? "YOU WON!!" : "Time's Up! You Lost!";
+        if (resultText) resultText.text = msg;
+
         if (passed && solved >= totalQs)
         {
-            float prevFastest = PlayerPrefs.GetFloat(FastestKey(mode, minutes, totalQs), 0f);
-            if (prevFastest <= 0f || secs < prevFastest)
-                PlayerPrefs.SetFloat(FastestKey(mode, minutes, totalQs), secs);
-            PlayerPrefs.Save();
+            TryUpdateBestTime(mode, secs);
+            SaveHighScores();
         }
 
-        // Optional: show best time for the selected mode in bestTimeText
-        if (bestTimeText)
-        {
-            float selectedBest = PlayerPrefs.GetFloat(FastestKey(mode, minutes, totalQs), 0f);
-            bestTimeText.text = (selectedBest > 0f) ? FormatTime(selectedBest) : "—";
-        }
+        float bestForMode = GetBestTime(mode);
+        if (bestTimeText) bestTimeText.text = (bestForMode > 0f) ? FormatTime(bestForMode) : "—";
 
-        // Show best times (times only) for ALL four modes using SAME minutes & totalQs
-        ShowAllBestTimes(minutes, totalQs);
+        ShowAllBestTimes();
     }
 
-    // ---------- All-modes display ----------
-    void ShowAllBestTimes(int minutes, int totalQs)
+    void Exit()
     {
-        SetBestTimeText(bestAddTimeText, "Add", minutes, totalQs);
-        SetBestTimeText(bestSubtractTimeText, "Subtract", minutes, totalQs);
-        SetBestTimeText(bestMultiplyTimeText, "Multiply", minutes, totalQs);
-        SetBestTimeText(bestDivideTimeText, "Divide", minutes, totalQs);
+        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 
-    void SetBestTimeText(Text target, string modeKey, int minutes, int totalQs)
+    // ---------- Save & Load ----------
+
+    void TryUpdateBestTime(string mode, float newTime)
+    {
+        HighScoreEntry entry = highScores.Find(e => e.mode == mode);
+
+        if (entry == null)
+        {
+            highScores.Add(new HighScoreEntry { mode = mode, bestTime = newTime });
+        }
+        else
+        {
+            // Only update if new time is better (lower)
+            if (newTime < entry.bestTime)
+            {
+                entry.bestTime = newTime;
+                Debug.Log($"New record for {mode}: {newTime}");
+            }
+            else
+            {
+                Debug.Log($"Did not beat {mode} record ({entry.bestTime}), keeping old score.");
+            }
+        }
+    }
+
+    float GetBestTime(string mode)
+    {
+        HighScoreEntry entry = highScores.Find(e => e.mode == mode);
+        return (entry != null) ? entry.bestTime : 0f;
+    }
+
+    void SaveHighScores()
+    {
+        using (StreamWriter writer = new StreamWriter(savePath, false))
+        {
+            foreach (var entry in highScores)
+            {
+                // Round to 2 decimal places and add "seconds"
+                string formattedTime = entry.bestTime.ToString("F2", CultureInfo.InvariantCulture);
+                writer.WriteLine($"mode: {entry.mode}, bestTime: {formattedTime} seconds");
+            }
+        }
+        Debug.Log("Saved high scores to " + savePath);
+    }
+
+    void LoadHighScores()
+    {
+        highScores.Clear();
+        if (File.Exists(savePath))
+        {
+            string[] lines = File.ReadAllLines(savePath);
+            foreach (string line in lines)
+            {
+                if (string.IsNullOrWhiteSpace(line)) continue;
+                if (!line.Contains("bestTime:")) continue;
+
+                string[] parts = line.Split(',');
+                if (parts.Length >= 2)
+                {
+                    string modePart = parts[0].Trim().Replace("mode: ", "");
+                    string timePart = parts[1].Trim().Replace("bestTime: ", "").Replace("seconds", "").Trim();
+
+                    if (float.TryParse(timePart, NumberStyles.Float, CultureInfo.InvariantCulture, out float timeValue))
+                    {
+                        highScores.Add(new HighScoreEntry { mode = modePart, bestTime = timeValue });
+                    }
+                }
+            }
+            Debug.Log("Loaded high scores from " + savePath);
+        }
+    }
+
+    // ---------- UI Helpers ----------
+
+    void ShowAllBestTimes()
+    {
+        SetBestTimeText(bestAddTimeText, "Add");
+        SetBestTimeText(bestSubtractTimeText, "Subtract");
+        SetBestTimeText(bestMultiplyTimeText, "Multiply");
+        SetBestTimeText(bestDivideTimeText, "Divide");
+    }
+
+    void SetBestTimeText(Text target, string mode)
     {
         if (!target) return;
-        float t = PlayerPrefs.GetFloat(FastestKey(modeKey, minutes, totalQs), 0f);
-        target.text = (t > 0f) ? FormatTime(t) : "—";   // time only
+        float t = GetBestTime(mode);
+        target.text = (t > 0f) ? FormatTime(t) : "—";
     }
-
-    // ---------- Keys & helpers ----------
-    // Best time is stored per (mode, minutes, totalQs)
-    string FastestKey(string mode, int minutes, int totalQs)
-        => $"HS_{mode}_{minutes}m_{totalQs}q_FastestTime";
 
     string PrettyMode(string mode)
     {
@@ -128,9 +196,6 @@ public class EndScript : MonoBehaviour
 
     string FormatTime(float seconds)
     {
-        if (seconds < 60f) return $"{seconds:F2} seconds";
-        int t = Mathf.FloorToInt(seconds);
-        int m = t / 60, s = t % 60;
-        return $"{m}:{s:00} minutes";
+        return $"{seconds:F2} seconds";
     }
 }

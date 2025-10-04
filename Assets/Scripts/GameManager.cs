@@ -9,19 +9,19 @@ public class GameManager : MonoBehaviour
     public InputField answerInput;
     public Button submitButton;
     public Text timerText;
-    public Text progressText; // e.g., "Q 1/5"
-    public Button backButton; // if you already added this
+    public Text progressText;
+    public Button backButton;
 
     [Header("Settings")]
     public int totalQuestions = 5;
 
-    [Header("SFX")]                           // <-- NEW
-    public AudioClip correctClip;             // <-- NEW (assign in Inspector)
-    [Range(0f, 1f)] public float correctVolume = 1f; // <-- NEW
+    [Header("SFX")]
+    public AudioClip correctClip; 
+    [Range(0f, 1f)] public float correctVolume = 1f;
 
-    private AudioSource sfx;                  // <-- NEW
+    private AudioSource sfx;
 
-    private int currentQuestionIndex = 0; // also equals solved count
+    private int currentQuestionIndex = 0;
     private int currentAnswer = 0;
     private float elapsedSeconds = 0f;
     private int timeLimitSeconds;
@@ -29,32 +29,28 @@ public class GameManager : MonoBehaviour
     private string mode;
     private bool gameOver = false;
 
-    void Awake()                               // <-- NEW
+    void Awake()
     {
-        // Create/get AudioSource without RequireComponent (prevents console log)
         sfx = GetComponent<AudioSource>();
         if (sfx == null) sfx = gameObject.AddComponent<AudioSource>();
         sfx.playOnAwake = false;
-        sfx.spatialBlend = 0f; // 2D
+        sfx.spatialBlend = 0f;
     }
 
     void Start()
     {
-        // Load selection from Intro
+
         mode = GameConfig.SelectedProblem;
         timeLimitSeconds = Mathf.Max(1, GameConfig.SelectedMinutes) * 60;
 
-        // Use the Intro dropdown value here
         totalQuestions = Mathf.Max(1, GameConfig.SelectedTotalQuestions);
-        GameConfig.TotalQuestions = totalQuestions; // keep End scene in sync
+        GameConfig.TotalQuestions = totalQuestions;
 
-        // Wire UI
         submitButton.onClick.AddListener(SubmitAnswer);
         answerInput.onEndEdit.AddListener(OnEndEditReturn);
 
-        if (backButton != null) backButton.onClick.AddListener(onBackClicked); // if you use Back
+        if (backButton != null) backButton.onClick.AddListener(onBackClicked);
 
-        // Init
         currentQuestionIndex = 0;
         elapsedSeconds = 0f;
         gameOver = false;
@@ -93,13 +89,12 @@ public class GameManager : MonoBehaviour
         {
             if (user == currentAnswer)
             {
-                PlayCorrectSfx(); // <-- NEW: play success sound
+                PlayCorrectSfx();
 
-                currentQuestionIndex++; // one more solved
+                currentQuestionIndex++;
 
                 if (currentQuestionIndex >= totalQuestions)
                 {
-                    // Completed all before time limit
                     if (elapsedSeconds <= timeLimitSeconds)
                     {
                         EndGame(passed: true);
@@ -114,13 +109,11 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // Prepare next input
         answerInput.text = "";
         answerInput.ActivateInputField();
         answerInput.caretPosition = 0;
     }
 
-    // <-- NEW
     void PlayCorrectSfx()
     {
         if (correctClip != null) sfx.PlayOneShot(correctClip, correctVolume);
@@ -191,7 +184,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("End");
     }
 
-    public void onBackClicked() // if you use a Back button
+    public void onBackClicked()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Intro");

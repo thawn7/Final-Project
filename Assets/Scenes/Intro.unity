@@ -1663,7 +1663,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 951153929}
-  - component: {fileID: 951153930}
   - component: {fileID: 951153931}
   - component: {fileID: 951153933}
   - component: {fileID: 951153932}
@@ -1689,19 +1688,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &951153930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 951153927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f8b0b78a7c122147835e745bade84f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProblemType
-  DisplayText: {fileID: 288097682}
 --- !u!114 &951153931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1723,6 +1709,7 @@ MonoBehaviour:
   - {fileID: 1590614699}
   - {fileID: 1194068342}
   xExit: {fileID: 0}
+  DisplayText: {fileID: 288097682}
 --- !u!114 &951153932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2085,8 +2072,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 951153930}
-        m_TargetAssemblyTypeName: ProblemType, Assembly-CSharp
+      - m_Target: {fileID: 951153931}
+        m_TargetAssemblyTypeName: SystemManager, Assembly-CSharp
         m_MethodName: addmsg
         m_Mode: 1
         m_Arguments:
@@ -2229,8 +2216,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 951153930}
-        m_TargetAssemblyTypeName: ProblemType, Assembly-CSharp
+      - m_Target: {fileID: 951153931}
+        m_TargetAssemblyTypeName: SystemManager, Assembly-CSharp
         m_MethodName: dividemsg
         m_Mode: 1
         m_Arguments:
@@ -3226,8 +3213,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 951153930}
-        m_TargetAssemblyTypeName: ProblemType, Assembly-CSharp
+      - m_Target: {fileID: 951153931}
+        m_TargetAssemblyTypeName: SystemManager, Assembly-CSharp
         m_MethodName: multiplymsg
         m_Mode: 1
         m_Arguments:
@@ -3912,8 +3899,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 951153930}
-        m_TargetAssemblyTypeName: ProblemType, Assembly-CSharp
+      - m_Target: {fileID: 951153931}
+        m_TargetAssemblyTypeName: SystemManager, Assembly-CSharp
         m_MethodName: subtractmsg
         m_Mode: 1
         m_Arguments:
