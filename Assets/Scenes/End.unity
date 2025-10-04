@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 25029135}
   - component: {fileID: 25029136}
   m_Layer: 5
-  m_Name: bestadd
+  m_Name: addBestTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 32623718}
   - component: {fileID: 32623719}
   m_Layer: 5
-  m_Name: bestdivide
+  m_Name: divideBestTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -289,7 +289,7 @@ GameObject:
   - component: {fileID: 108158165}
   - component: {fileID: 108158164}
   m_Layer: 5
-  m_Name: subtxt
+  m_Name: label2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -447,7 +447,7 @@ GameObject:
   - component: {fileID: 265556359}
   - component: {fileID: 265556358}
   m_Layer: 5
-  m_Name: multiplytxt
+  m_Name: label3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -550,7 +550,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.28012648, y: 0.29032227}
   m_AnchorMax: {x: 0.40156326, y: 0.35832226}
-  m_AnchoredPosition: {x: 4.499878, y: 2}
+  m_AnchoredPosition: {x: 4.499878, y: 1.9999695}
   m_SizeDelta: {x: -9, y: -11}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &286348653
@@ -667,10 +667,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1698228974}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.24755517, y: 0.55700004}
-  m_AnchorMax: {x: 0.337, y: 0.6486498}
-  m_AnchoredPosition: {x: 0.30000305, y: 0.099998474}
-  m_SizeDelta: {x: -2.3637009, y: -3.629799}
+  m_AnchorMin: {x: 0.18575856, y: 0.55700004}
+  m_AnchorMax: {x: 0.28172436, y: 0.64100003}
+  m_AnchoredPosition: {x: 0.19999695, y: -0.81489944}
+  m_SizeDelta: {x: -4.363701, y: -1.6297989}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &413840905
 MonoBehaviour:
@@ -938,7 +938,7 @@ GameObject:
   - component: {fileID: 672756960}
   - component: {fileID: 672756959}
   m_Layer: 5
-  m_Name: addtxt
+  m_Name: label1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1017,7 +1017,7 @@ GameObject:
   - component: {fileID: 772187633}
   - component: {fileID: 772187634}
   m_Layer: 5
-  m_Name: bestmultiply
+  m_Name: multiplyBestTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1175,7 +1175,7 @@ GameObject:
   - component: {fileID: 866344025}
   - component: {fileID: 866344024}
   m_Layer: 5
-  m_Name: dividetxt
+  m_Name: label4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1254,7 +1254,7 @@ GameObject:
   - component: {fileID: 973531187}
   - component: {fileID: 973531188}
   m_Layer: 5
-  m_Name: bestsub
+  m_Name: subBestTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1408,7 +1408,7 @@ GameObject:
   - component: {fileID: 1132806173}
   - component: {fileID: 1132806172}
   m_Layer: 5
-  m_Name: TitleText
+  m_Name: resultmessage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1487,7 +1487,7 @@ GameObject:
   - component: {fileID: 1176114788}
   - component: {fileID: 1176114787}
   m_Layer: 5
-  m_Name: timetxt
+  m_Name: finishLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1566,7 +1566,7 @@ GameObject:
   - component: {fileID: 1223723833}
   - component: {fileID: 1223723832}
   m_Layer: 5
-  m_Name: besttime
+  m_Name: BestTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1621,7 +1621,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 16
+    m_FontSize: 22
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 1
@@ -1632,7 +1632,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Best Time
+  m_Text: Fastest Time
 --- !u!222 &1223723833
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1757,6 +1757,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1544373738}
   - component: {fileID: 1544373737}
+  - component: {fileID: 1544373739}
   m_Layer: 0
   m_Name: EndManager
   m_TagString: Untagged
@@ -1776,19 +1777,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91485c9b9845924da5a24d5c7d40f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EndScript
-  problemText: {fileID: 1567600296}
+  problemTitle: {fileID: 1567600296}
   finishTimeText: {fileID: 1653683244}
-  bestTimeText: {fileID: 25029136}
   resultText: {fileID: 1132806172}
-  bestAddTimeText: {fileID: 25029136}
-  bestSubtractTimeText: {fileID: 973531188}
-  bestMultiplyTimeText: {fileID: 772187634}
-  bestDivideTimeText: {fileID: 32623719}
   retryButton: {fileID: 2121591400}
   homeButton: {fileID: 286348653}
   exitButton: {fileID: 1884141590}
   endClip: {fileID: 8300000, guid: 5a0a8c33c3201534aa7bbdde98f3c090, type: 3}
-  endVolume: 1
 --- !u!4 &1544373738
 Transform:
   m_ObjectHideFlags: 0
@@ -1804,6 +1799,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1544373739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544373736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 442c61254ee0e164d9ae68f1e8318928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HighScore
+  Addition: {fileID: 25029136}
+  Subtraction: {fileID: 973531188}
+  Multiplication: {fileID: 772187634}
+  Division: {fileID: 32623719}
 --- !u!1 &1567600294
 GameObject:
   m_ObjectHideFlags: 0
@@ -1816,7 +1827,7 @@ GameObject:
   - component: {fileID: 1567600297}
   - component: {fileID: 1567600296}
   m_Layer: 5
-  m_Name: title
+  m_Name: currentProblem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1854,7 +1865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15566038, g: 0.6226415, b: 0.36899662, a: 1}
+  m_Color: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1895,7 +1906,7 @@ GameObject:
   - component: {fileID: 1653683245}
   - component: {fileID: 1653683244}
   m_Layer: 5
-  m_Name: finishTime
+  m_Name: timeFINISH
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2097,7 +2108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7490196, g: 0.8862745, b: 0.8980392, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

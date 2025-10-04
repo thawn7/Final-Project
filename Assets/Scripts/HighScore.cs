@@ -3,151 +3,96 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.IO;
 using System.Collections.Generic;
-using System.Globalization; // for formatting consistency
+using System.Globalization;
 
 public class HighScore : MonoBehaviour
 {
+    public Text Addition, Subtraction, Multiplication, Division;
 
-
-    [Header("HIGHSCORE")]
-    public Text bestAddTimeText;
-    public Text bestSubtractTimeText;
-    public Text bestMultiplyTimeText;
-    public Text bestDivideTimeText;
-
-    private string savePath;
+    string savePath;
+    List<Entry> scores = new();
 
     [System.Serializable]
-    public class HighScoreEntry
-    {
-        public string mode;
-        public float bestTime;
-    }
-
-    private List<HighScoreEntry> highScores = new List<HighScoreEntry>();
+    public class Entry { public string mode; public float bestTime; }
 
     void Awake()
     {
+    #if UNITY_EDITOR || UNITY_STANDALONE
+            savePath = Path.Combine(Application.dataPath, "gamesavefile.json");
+    #else
+        savePath = Path.Combine(Application.persistentDataPath, "gamesavefile.json");
+    #endif
 
-        savePath = Path.Combine(Application.dataPath, "gamesavefile.json");
-        LoadHighScores();
+        LoadScores();
     }
 
     void Start()
     {
-
-
         string mode = GameConfig.SelectedProblem;
-        int totalQs = Mathf.Max(1, GameConfig.TotalQuestions);
-        int solved = GameConfig.ProblemsSolved;
-        float secs = GameConfig.ElapsedSeconds;
+        float time = GameConfig.ElapsedSeconds;
         bool passed = GameConfig.Passed;
+        int solved = GameConfig.ProblemsSolved, total = GameConfig.TotalQuestions;
 
-
-        if (passed && solved >= totalQs)
-        {
-            TryUpdateBestTime(mode, secs);
-            SaveHighScores();
-        }
-
-        float bestForMode = GetBestTime(mode);
-
-        ShowAllBestTimes();
+        if (passed && solved >= total) UpdateBest(mode, time);
+        SaveScores();
+        ShowAll();
     }
 
 
-    // ---------- Save & Load ----------
-
-    void TryUpdateBestTime(string mode, float newTime)
+    void UpdateBest(string mode, float newTime)
     {
-        HighScoreEntry entry = highScores.Find(e => e.mode == mode);
-
-        if (entry == null)
-        {
-            highScores.Add(new HighScoreEntry { mode = mode, bestTime = newTime });
-        }
-        else
-        {
-            // Only update if new time is better (lower)
-            if (newTime < entry.bestTime)
-            {
-                entry.bestTime = newTime;
-                Debug.Log($"New record for {mode}: {newTime}");
-            }
-            else
-            {
-                Debug.Log($"Did not beat {mode} record ({entry.bestTime}), keeping old score.");
-            }
-        }
+        var e = scores.Find(x => x.mode == mode);
+        if (e == null) scores.Add(new Entry { mode = mode, bestTime = newTime });
+        else if (newTime < e.bestTime) e.bestTime = newTime;
     }
 
-    float GetBestTime(string mode)
+    void SaveScores()
     {
-        HighScoreEntry entry = highScores.Find(e => e.mode == mode);
-        return (entry != null) ? entry.bestTime : 0f;
+        using StreamWriter w = new(savePath, false);
+        foreach (var e in scores)
+            w.WriteLine($"mode: {e.mode}, bestTime: {e.bestTime:F2} seconds");
     }
 
-    void SaveHighScores()
+    void LoadScores()
     {
-        using (StreamWriter writer = new StreamWriter(savePath, false))
+        scores.Clear();
+        if (!File.Exists(savePath)) return;
+
+        foreach (var line in File.ReadAllLines(savePath))
         {
-            foreach (var entry in highScores)
-            {
-                // Round to 2 decimal places and add "seconds"
-                string formattedTime = entry.bestTime.ToString("F2", CultureInfo.InvariantCulture);
-                writer.WriteLine($"mode: {entry.mode}, bestTime: {formattedTime} seconds");
-            }
-        }
-        Debug.Log("Saved high scores to " + savePath);
-    }
+            if (!line.Contains("bestTime:")) continue;
+            string[] p = line.Split(',');
+            string mode = p[0].Replace("mode:", "").Trim();
+            string timeStr = p[1].Replace("bestTime:", "").Replace("seconds", "").Trim();
 
-    void LoadHighScores()
-    {
-        highScores.Clear();
-        if (File.Exists(savePath))
-        {
-            string[] lines = File.ReadAllLines(savePath);
-            foreach (string line in lines)
-            {
-                if (string.IsNullOrWhiteSpace(line)) continue;
-                if (!line.Contains("bestTime:")) continue;
-
-                string[] parts = line.Split(',');
-                if (parts.Length >= 2)
-                {
-                    string modePart = parts[0].Trim().Replace("mode: ", "");
-                    string timePart = parts[1].Trim().Replace("bestTime: ", "").Replace("seconds", "").Trim();
-
-                    if (float.TryParse(timePart, NumberStyles.Float, CultureInfo.InvariantCulture, out float timeValue))
-                    {
-                        highScores.Add(new HighScoreEntry { mode = modePart, bestTime = timeValue });
-                    }
-                }
-            }
-            Debug.Log("Loaded high scores from " + savePath);
+            if (float.TryParse(timeStr, NumberStyles.Float, CultureInfo.InvariantCulture, out float t))
+                scores.Add(new Entry { mode = mode, bestTime = t });
         }
     }
 
-    // ---------- UI Helpers ----------
-
-    void ShowAllBestTimes()
+    void ShowAll()
     {
-        SetBestTimeText(bestAddTimeText, "Add");
-        SetBestTimeText(bestSubtractTimeText, "Subtract");
-        SetBestTimeText(bestMultiplyTimeText, "Multiply");
-        SetBestTimeText(bestDivideTimeText, "Divide");
+        Set(Addition, "Add");
+        Set(Subtraction, "Subtract");
+        Set(Multiplication, "Multiply");
+        Set(Division, "Divide");
     }
 
-    void SetBestTimeText(Text target, string mode)
+    void Set(Text target, string mode)
     {
         if (!target) return;
-        float t = GetBestTime(mode);
+        float t = Get(mode);
         target.text = (t > 0f) ? FormatTime(t) : "—";
     }
 
+    float Get(string mode) => scores.Find(x => x.mode == mode)?.bestTime ?? 0f;
 
     string FormatTime(float seconds)
     {
-        return $"{seconds:F2} seconds";
+        if (seconds < 60f)
+            return $"{seconds:F2} seconds";
+        int m = Mathf.FloorToInt(seconds / 60);
+        int s = Mathf.FloorToInt(seconds % 60);
+        return $"{m}:{s:00} minutes";
     }
 }

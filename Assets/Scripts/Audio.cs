@@ -4,7 +4,7 @@ using UnityEngine;
 public class Audio : MonoBehaviour
 {
     public AudioClip clickClip;
-    [Range(0f, 1f)] public float volume = 1f;
+    [Range(0f, 1f)] private float volume = 1f;
 
     AudioSource src;
 
