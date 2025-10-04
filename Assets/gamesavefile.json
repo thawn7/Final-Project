@@ -1,1 +1,3 @@
 mode: Subtract, bestTime: 5.16 seconds
+mode: Add, bestTime: 5.16 seconds
+mode: Multiply, bestTime: 13.27 seconds
