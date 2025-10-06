@@ -2,7 +2,7 @@
 
 http://localhost/phpmyadmin
 
-mySQL tab -> copy and paste the below code in sql tab
+mySQL tab -> copy and paste the below code in sql tab:
 
 
 CREATE DATABASE sangn;
