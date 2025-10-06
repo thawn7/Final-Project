@@ -14,6 +14,5 @@ CREATE TABLE scores (
     score INT
 );
 
-
 then, put the Assets/www/sangn <-this folder in C:\wamp64\www\HERE 
 so it should be C:\wamp64\www\sangn with score.php included
