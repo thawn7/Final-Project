@@ -51,6 +51,7 @@ public class HighScore : MonoBehaviour
         using StreamWriter w = new(savePath, false);
         foreach (var e in scores)
             w.WriteLine($"mode: {e.mode}, bestTime: {e.bestTime:F2} seconds");
+        Debug.Log("Score saved to gamesavefile.json! Wait a few second to show up in Asset Folder!");
     }
 
     void LoadScores()
