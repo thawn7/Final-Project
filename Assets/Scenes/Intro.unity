@@ -232,7 +232,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.18550594, y: 0.518}
   m_AnchorMax: {x: 0.52400005, y: 0.64545965}
-  m_AnchoredPosition: {x: -0.75297546, y: -0.31100082}
+  m_AnchoredPosition: {x: -0.7529793, y: -0.31100082}
   m_SizeDelta: {x: -2.4960022, y: -2.827999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &64670366
@@ -2981,10 +2981,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1487522005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.6101583, y: 0.015206705}
-  m_AnchorMax: {x: 0.9136835, y: 0.081507295}
-  m_AnchoredPosition: {x: -1.1166992, y: -2.4003906}
-  m_SizeDelta: {x: -10.557598, y: -4.8008}
+  m_AnchorMin: {x: 0.5594312, y: 0.015206705}
+  m_AnchorMax: {x: 0.9453305, y: 0.08128407}
+  m_AnchoredPosition: {x: -1.8999939, y: -2.4003906}
+  m_SizeDelta: {x: -5.0571976, y: -4.8008003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1435693279
 MonoBehaviour:
@@ -3008,11 +3008,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 11
+    m_FontSize: 9
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 0
-    m_MaxSize: 16
+    m_MaxSize: 14
     m_Alignment: 3
     m_AlignByGeometry: 1
     m_RichText: 1
@@ -3062,7 +3062,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5594217, y: 0.632}
   m_AnchorMax: {x: 1, y: 0.85660696}
-  m_AnchoredPosition: {x: 1.108017, y: -0.3999939}
+  m_AnchoredPosition: {x: 1.1080132, y: -0.3999939}
   m_SizeDelta: {x: -1.1860008, y: -4.5401993}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1448404039
@@ -4659,7 +4659,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.22100002, y: 0.16100001}
   m_AnchorMax: {x: 0.49600002, y: 0.294}
-  m_AnchoredPosition: {x: 0.19999695, y: 0.35899353}
+  m_AnchoredPosition: {x: 0.20000458, y: 0.35899353}
   m_SizeDelta: {x: -2.2269974, y: -2.986}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1930684360
