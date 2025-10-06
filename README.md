@@ -16,3 +16,6 @@ CREATE TABLE scores (
 
 then, put the Assets/www/sangn <-this folder in C:\wamp64\www\HERE 
 so it should be C:\wamp64\www\sangn with score.php included
+
+# score save
+Note that scores are saved to gamesavefile.json after game completion and can be modify as needed.
