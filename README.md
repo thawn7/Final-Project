@@ -1,6 +1,7 @@
 # MySQL commands to set up the database 
 
 http://localhost/phpmyadmin
+
 mySQL tab -> copy and paste the below code in sql tab
 
 CREATE DATABASE sangn;
