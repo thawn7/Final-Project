@@ -5,13 +5,13 @@ http://localhost/phpmyadmin
 SQL tab -> copy and paste the below code in sql tab:
 
 
-CREATE DATABASE sangn;
+CREATE DATABASE mathgame;
 
-USE sangn;
+USE mathgame;
 
 CREATE TABLE scores (
-    name VARCHAR(50),
-    score INT
+    mode VARCHAR(50),
+    bestTime FLOAT
 );
 
 then, put the Assets/www/sangn <-this folder in C:\wamp64\www\HERE 
