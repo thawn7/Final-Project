@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using System.Collections.Generic;
 using System.Globalization;
+using UnityEngine.Networking;
+using System.Collections;
 
 public class HighScore : MonoBehaviour
 {
@@ -12,17 +14,20 @@ public class HighScore : MonoBehaviour
     string savePath;
     List<Entry> scores = new();
 
+    // NEW: store the most recent run separately
+    private string latestMode;
+    private float latestBestTime;
+
     [System.Serializable]
     public class Entry { public string mode; public float bestTime; }
 
     void Awake()
     {
-    #if UNITY_EDITOR || UNITY_STANDALONE
-            savePath = Path.Combine(Application.dataPath, "gamesavefile.json");
-    #else
+#if UNITY_EDITOR || UNITY_STANDALONE
+        savePath = Path.Combine(Application.dataPath, "gamesavefile.json");
+#else
         savePath = Path.Combine(Application.persistentDataPath, "gamesavefile.json");
-    #endif
-
+#endif
         LoadScores();
     }
 
@@ -33,17 +38,28 @@ public class HighScore : MonoBehaviour
         bool passed = GameConfig.Passed;
         int solved = GameConfig.ProblemsSolved, total = GameConfig.TotalQuestions;
 
-        if (passed && solved >= total) UpdateBest(mode, time);
+        if (passed && solved >= total)
+        {
+            UpdateBest(mode, time);
+            latestMode = mode;
+            latestBestTime = time;
+        }
+
         SaveScores();
         ShowAll();
     }
 
-
     void UpdateBest(string mode, float newTime)
     {
         var e = scores.Find(x => x.mode == mode);
-        if (e == null) scores.Add(new Entry { mode = mode, bestTime = newTime });
-        else if (newTime < e.bestTime) e.bestTime = newTime;
+        if (e == null)
+        {
+            scores.Add(new Entry { mode = mode, bestTime = newTime });
+        }
+        else if (newTime < e.bestTime)
+        {
+            e.bestTime = newTime;
+        }
     }
 
     void SaveScores()
@@ -51,7 +67,28 @@ public class HighScore : MonoBehaviour
         using StreamWriter w = new(savePath, false);
         foreach (var e in scores)
             w.WriteLine($"mode: {e.mode}, bestTime: {e.bestTime:F2} seconds");
-        Debug.Log("Score saved to gamesavefile.json! Wait a few second to show up in Asset Folder!");
+
+        Debug.Log("Score saved to gamesavefile.json");
+
+        if (!string.IsNullOrEmpty(latestMode))
+            StartCoroutine(SubmitScoreToServer(latestMode, latestBestTime));
+    }
+
+    IEnumerator SubmitScoreToServer(string mode, float bestTime)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("mode", mode);
+        form.AddField("bestTime", bestTime.ToString(System.Globalization.CultureInfo.InvariantCulture));
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/mathgame/score.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+                Debug.LogError("Submit failed: " + www.error);
+            else
+                Debug.Log("Score submitted to server successfully! " + mode + " " + bestTime);
+        }
     }
 
     void LoadScores()
