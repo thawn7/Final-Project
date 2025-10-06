@@ -2034,7 +2034,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Audio
   clickClip: {fileID: 8300000, guid: 2f77268a022071f4bae76ff47cb43aed, type: 3}
-  volume: 1
 --- !u!82 &951153933
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2950,6 +2949,85 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1431639584}
   m_CullTransparentMesh: 1
+--- !u!1 &1435693277
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1435693278}
+  - component: {fileID: 1435693280}
+  - component: {fileID: 1435693279}
+  m_Layer: 5
+  m_Name: mathtypemsg (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1435693278
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435693277}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1487522005}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.675, y: 0.015206705}
+  m_AnchorMax: {x: 0.9047981, y: 0.08241341}
+  m_AnchoredPosition: {x: -0.94000244, y: -2.3999634}
+  m_SizeDelta: {x: -12.119995, y: -5.800812}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1435693279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435693277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 11
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 0
+    m_MaxSize: 16
+    m_Alignment: 3
+    m_AlignByGeometry: 1
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Scores will be saved to gamesavefile.json
+--- !u!222 &1435693280
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435693277}
+  m_CullTransparentMesh: 1
 --- !u!1 &1448404037
 GameObject:
   m_ObjectHideFlags: 0
@@ -3215,6 +3293,7 @@ RectTransform:
   - {fileID: 1673439141}
   - {fileID: 1499575365}
   - {fileID: 2615144}
+  - {fileID: 1435693278}
   - {fileID: 2079719686}
   - {fileID: 752362675}
   - {fileID: 1994397396}
@@ -3652,7 +3731,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.15013456, y: 0.085139}
   m_AnchorMax: {x: 0.42000002, y: 0.44313902}
-  m_AnchoredPosition: {x: -0.64009476, y: -0.020004272}
+  m_AnchoredPosition: {x: -0.6400986, y: -0.020004272}
   m_SizeDelta: {x: -10.534103, y: -10.98761}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1590614699
@@ -4077,7 +4156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.03501892, y: -0.0000076293945}
+  m_AnchoredPosition: {x: 0.03501892, y: 0}
   m_SizeDelta: {x: -0.07, y: -32.3073}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1745527947

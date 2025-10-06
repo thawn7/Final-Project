@@ -921,7 +921,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Answer
+  m_Text: Type Your Answer
 --- !u!222 &1314191856
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -962,14 +962,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   questionText: {fileID: 2014042651}
-  answerInput: {fileID: 896285259}
-  submitButton: {fileID: 273394738}
   timerText: {fileID: 1747774553}
   progressText: {fileID: 60445345}
+  answerInput: {fileID: 896285259}
+  submitButton: {fileID: 273394738}
   backButton: {fileID: 1498770694}
-  totalQuestions: 5
   correctClip: {fileID: 8300000, guid: 59c37a0610d5a414ea480344fe76b4d8, type: 3}
   correctVolume: 1
+  totalQuestions: 5
 --- !u!4 &1412407472
 Transform:
   m_ObjectHideFlags: 0
@@ -998,7 +998,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Audio
   clickClip: {fileID: 8300000, guid: 2f77268a022071f4bae76ff47cb43aed, type: 3}
-  volume: 1
 --- !u!82 &1412407474
 AudioSource:
   m_ObjectHideFlags: 0
