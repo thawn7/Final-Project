@@ -1,5 +1,5 @@
 # MySQL commands to set up the database 
-install wampserver64 then go to
+run wampserver64 then go to
 http://localhost/phpmyadmin
 
 SQL tab above -> copy and paste the below code in sql tab:
