@@ -22,11 +22,11 @@ public class HighScore : MonoBehaviour
 
     void Awake()
     {
-#if UNITY_EDITOR || UNITY_STANDALONE
-        savePath = Path.Combine(Application.dataPath, "gamesavefile.json");
-#else
-        savePath = Path.Combine(Application.persistentDataPath, "gamesavefile.json");
-#endif
+        #if UNITY_EDITOR || UNITY_STANDALONE
+                savePath = Path.Combine(Application.dataPath, "gamesavefile.json");
+        #else
+                savePath = Path.Combine(Application.persistentDataPath, "gamesavefile.json");
+        #endif
         LoadScores();
     }
 
@@ -70,10 +70,10 @@ public class HighScore : MonoBehaviour
         Debug.Log("Score saved to gamesavefile.json");
 
         if (!string.IsNullOrEmpty(latestMode))
-            StartCoroutine(SubmitScoreToServer(latestMode, latestBestTime));
+            StartCoroutine(Scoresubmitter(latestMode, latestBestTime));
     }
 
-    IEnumerator SubmitScoreToServer(string mode, float bestTime)
+    IEnumerator Scoresubmitter(string mode, float bestTime)
     {
         WWWForm form = new WWWForm();
         form.AddField("mode", mode);
