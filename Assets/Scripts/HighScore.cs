@@ -14,10 +14,9 @@ public class HighScore : MonoBehaviour
     string savePath;
     List<Entry> scores = new();
 
-    // NEW: store the most recent run separately
     private string latestMode;
     private float latestBestTime;
-
+    public string urllink = "http://localhost/mathgame/score.php";
     [System.Serializable]
     public class Entry { public string mode; public float bestTime; }
 
@@ -80,14 +79,14 @@ public class HighScore : MonoBehaviour
         form.AddField("mode", mode);
         form.AddField("bestTime", bestTime.ToString(System.Globalization.CultureInfo.InvariantCulture));
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/mathgame/score.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post(urllink, form))
         {
             yield return www.SendWebRequest();
 
             if (www.result != UnityWebRequest.Result.Success)
-                Debug.LogError("Submit failed: " + www.error);
+                Debug.LogError("Submit failed " + www.error);
             else
-                Debug.Log("Score submitted to server successfully! " + mode + " " + bestTime);
+                Debug.Log("Score submitted" + mode + " " + bestTime);
         }
     }
 

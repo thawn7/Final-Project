@@ -13,9 +13,9 @@ if ($conn->connect_error) {
 }
 
 $stmt = $conn->prepare("INSERT INTO scores (mode, bestTime) VALUES (?, ?)");
-$stmt->bind_param("sd", $mode, $bestTime); // s=string d=double
+$stmt->bind_param("sd", $mode, $bestTime); 
 $stmt->execute();
 
-echo "Success!";
+echo "go to http://localhost/mathgame/display.php";
 $conn->close();
 ?>
